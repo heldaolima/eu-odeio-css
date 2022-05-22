@@ -115,3 +115,56 @@ Useful for situations where you do not want an item to break onto a new line, bu
 - padding, margin and border will cause other elements to be pushed away from the box.
 
 But it does not break onto a new line, and will only become larger than its content if you explicitly add width and height properties.
+
+# Overflowing content
+- `overflow: hidden`: esconde o que houver de overflow. Então se o texto vazava pra fora de uma caixa, ele passa a ser escondido, como que se ela fosse um frame impermeável.
+- `overflow: auto`: cria scrolls à medida que for necessário dentro daquela caixa, mas você pode controlar se quer só no eixo x ou só no eixo y.
+- `overflow-wrap`: esse eu achei legal: ele adadpta o tamanho da caixa conforme o conteúdo. Num overflow, a caixa aumenta pra conter o conteúdo vazado. Ele também pode quebrar a palavra (`break-word`) pra caber na caixa.
+ 
+# Values and units
+Valores são especificados nas propriedades. Ex: `color: white`, 'white' é valor.
+ 
+## Lenghts
+Pode ser relativa ou absoluta. Vejamos os valores relativos, que parecem ser mais úteis:
+- `em`: Font-size do pai, no caso de propriedades tipográficas feito `font-size`, e do font-size mesmo, em caso de `width`.
+- `ex`: x-height of the element's font.
+- `ch`: The advance measure (width) of the glyph "0" of the element's font.
+- `rem`: Font size of the root element.
+- `lh`: Line height of the element
+- `vw`: 1% of the viewport's width
+- `vh`: 1% of the viewport's height.
+- `vmin`: 1% of the viewport's smaller dimension.
+- `vmax`: % of the viewport's larger dimension.
+ 
+### ems and rems
+É bom entender as diferenças entre eles. 
+ 
+**em unit means "my parent element's font-size"**. Se um elemento tem 1.3em, siginifica que ele tem 1.3 vezes o tamanho do pai. Então, se você for aninhando elementos e eles usam em, a fonte vai ficando maior quanto mais dentro eles estiverem, porque a multiplicação vai se sucedendo. 
+ 
+**rem unit means "The root element's font-size"**. O tamanho do elemento virá da raiz `<html>` e não vai aumentar devido a aninhamentos. Você setou um tamanho fixo pra servir de referência;
+
+### Percentages
+Valores percentuais são relativos a outros valores. For example, if you set an element's `font-size` as a percentage, it will be a percentage of the `font-size` of the element's parent.
+
+### Images
+Image value type is used whenever an image is a valid value. This can be an actual imagine file pointed to via a `url()` function, or a grandient.
+
+### Position
+It represents a set of 2D coordinates, used to position an item such as a background image. It can take keywords: `top`, `left`, `bottom`, `right` and `center`.
+
+### Strings
+Exemplo: Specifying generated content.
+    
+    .box::after {
+        content: "This is a string. I know because it is quoted in the CSS."
+    }
+
+# Sizing items
+Alguns elementos têm tamanho natural, feito uma img. An empy `<div>`, on the other hand, has no sie of its own.
+
+## Setting a specific size
+This is called **extrinsic size**. You can give the element specific width and height values. Por causa do risco de overflow, é necessário ajustar cuidadosamente o tamanho usando lenghts ou percentagens.
+
+## min- and max- sizes
+- If you have a box that might contain a variable amount of content, and you always want it to be *at least* a certain height, you could set the `min-height` property on it. A caixa terá esse tamanho mínimo, mas crescerá em height à medida que mais conteúdo for adicionado a ela.
+- A commmon use of `max-width` is to cause images to scale down if there is not enough space to display them at their instrinsic width making sure they don't become larger than that width.
